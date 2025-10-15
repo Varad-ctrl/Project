@@ -16,9 +16,14 @@ function addTransaction(e) {
 
   const transaction = {
     id: Date.now(),
-    text: text.value,
+    text: text.value.trim(),
     amount: +amount.value
   };
+
+  if (transaction.text === '' || isNaN(transaction.amount)) {
+    alert('Please enter valid transaction details.');
+    return;
+  }
 
   transactions.push(transaction);
   addTransactionDOM(transaction);
@@ -33,14 +38,12 @@ function addTransaction(e) {
 function addTransactionDOM(transaction) {
   const sign = transaction.amount < 0 ? '-' : '+';
   const item = document.createElement('li');
-
   item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
   item.innerHTML = `
     ${transaction.text} 
     <span>${sign}$${Math.abs(transaction.amount)}</span>
     <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>
   `;
-
   list.appendChild(item);
 }
 
@@ -85,10 +88,15 @@ function updateChart() {
       labels: ['Income', 'Expense'],
       datasets: [{
         data: [incomeTotal, expenseTotal],
-        backgroundColor: ['#4CAF50', '#f44336']
+        backgroundColor: ['#28a745', '#dc3545'],
+        hoverOffset: 10
       }]
     },
-    options: { responsive: true }
+    options: {
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
   });
 }
 
