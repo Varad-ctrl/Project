@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -6,59 +8,91 @@
 }
 
 body {
-  background-color: #f4f4f9;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 30px 10px;
+  color: #333;
 }
 
 .container {
-  width: 400px;
-  background: white;
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
   padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  backdrop-filter: blur(8px);
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333;
 }
 
-.balance {
-  text-align: center;
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 15px;
   margin-bottom: 20px;
+}
+
+.balance-card h2 {
+  font-weight: 500;
+}
+
+.balance-card h3 {
+  font-size: 2rem;
+  color: #222;
+  margin-top: 5px;
 }
 
 .summary {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
-  background: #eee;
-  padding: 10px;
-  border-radius: 5px;
+  text-align: center;
+}
+
+.summary-item h4 {
+  color: #555;
+}
+
+.money {
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .money.plus {
-  color: green;
+  color: #28a745;
 }
 
 .money.minus {
-  color: red;
+  color: #dc3545;
 }
 
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
 input {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #74b9ff;
+  box-shadow: 0 0 5px rgba(116, 185, 255, 0.6);
 }
 
 button {
@@ -66,8 +100,10 @@ button {
   background: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
 button:hover {
@@ -77,35 +113,68 @@ button:hover {
 .list {
   list-style: none;
   margin-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .list li {
-  background: #f1f1f1;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px 12px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   border-right: 5px solid;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .list li.plus {
-  border-color: green;
+  border-color: #28a745;
 }
 
 .list li.minus {
-  border-color: red;
+  border-color: #dc3545;
+}
+
+.list li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 .delete-btn {
-  background: red;
+  background: #e74c3c;
   color: white;
   border: none;
   padding: 5px 8px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.3s;
 }
 
-canvas {
-  margin-top: 20px;
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+.chart-container {
+  text-align: center;
+}
+
+footer {
+  margin-top: 25px;
+  text-align: center;
+  color: white;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
 }
