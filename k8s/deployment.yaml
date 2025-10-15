@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+  labels:
+    app: my-web-app
+spec:
+  replicas: 3                # Number of Pods to start initially
+  selector:
+    matchLabels:
+      app: my-web-app        # Must match template labels
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+        - name: my-web-container
+          image: nginx:latest     # You can replace this with your own web app image
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
