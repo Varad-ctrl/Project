@@ -1,141 +1,46 @@
-* {
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
+* { box-sizing: border-box; font-family: "Poppins", sans-serif; }
 body {
-  background: #f4f7fc;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
+  background:#f4f7fc; margin:0; display:flex; justify-content:center; padding:20px 0;
 }
-
 .container {
-  width: 480px;
-  background: #fff;
-  margin-top: 30px;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width:520px; background:#fff; padding:22px; border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
+h1 { text-align:center; color:#2c3e50; margin:0 0 12px; }
+.balance-section { text-align:center; }
+.summary { display:flex; justify-content:space-around; margin-top:12px; }
+.income p { color:green; font-weight:700; }
+.expense p { color:red; font-weight:700; }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
+.transaction-form { margin-top:18px; }
+.transaction-form input, .transaction-form select {
+  width:100%; padding:10px; margin:6px 0; border:1px solid #dcdfe6; border-radius:8px;
 }
-
-.balance-section {
-  text-align: center;
-}
-
-.summary {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 15px;
-}
-
-.income p {
-  color: green;
-  font-weight: bold;
-}
-
-.expense p {
-  color: red;
-  font-weight: bold;
-}
-
-.transaction-form,
-.filters,
-.history,
-.chart-container {
-  margin-top: 25px;
-}
-
-.transaction-form input,
-.transaction-form select {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
+.transaction-form .row { display:flex; gap:8px; }
+.transaction-form .row input[type="date"] { flex:1; }
+.transaction-form .row input[type="number"] { flex:1; }
+.transaction-form .row select { flex:1; }
 .transaction-form button {
-  width: 100%;
-  padding: 10px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  width:100%; padding:10px; margin-top:8px; background:#3498db; color:#fff; border:0; border-radius:8px; cursor:pointer;
 }
+.transaction-form button:hover { background:#2c80b9; }
 
-.transaction-form button:hover {
-  background: #2980b9;
-}
+.filters { display:flex; gap:8px; margin-top:18px; align-items:center; flex-wrap:wrap; }
+.filters select, .filters input { padding:8px; border-radius:6px; border:1px solid #e0e6ef; }
+.filters button { padding:8px 12px; background:#e67e22; color:#fff; border:0; border-radius:6px; cursor:pointer; }
 
-.filters {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+.history { margin-top:18px; max-height:220px; overflow:auto; }
+#list { list-style:none; padding:0; margin:0; }
+#list li { display:flex; justify-content:space-between; align-items:center; background:#fafafa; padding:10px; margin:6px 0; border-left:6px solid; border-radius:6px; }
+#list li.plus { border-color:green; }
+#list li.minus { border-color:red; }
+#list li small { color:#666; display:block; margin-top:4px; font-size:12px; }
+#list li button { background:none; border:none; color:#e74c3c; cursor:pointer; font-weight:700; margin-left:8px; }
 
-.filters select,
-.filters input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
+.chart-container { margin-top:18px; }
 
-.filters button {
-  padding: 8px 12px;
-  background: #e67e22;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.filters button:hover {
-  background: #d35400;
-}
-
-#list {
-  list-style: none;
-  padding: 0;
-}
-
-#list li {
-  display: flex;
-  justify-content: space-between;
-  background: #f8f9fa;
-  padding: 10px;
-  margin: 6px 0;
-  border-left: 6px solid;
-  border-radius: 5px;
-}
-
-#list li.plus {
-  border-color: green;
-}
-
-#list li.minus {
-  border-color: red;
-}
-
-#list li small {
-  color: #555;
-}
-
-#list li button {
-  background: none;
-  border: none;
-  color: #e74c3c;
-  cursor: pointer;
-}
-
-.chart-container {
-  margin-top: 30px;
+@media (max-width:560px){
+  .container { width:95%; padding:16px; }
+  .transaction-form .row { flex-direction:column; }
+  .filters { flex-direction:column; }
 }
