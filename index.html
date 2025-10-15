@@ -1,129 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Complex Expense Tracker</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <h1>Expense Tracker</h1>
-      <div class="header-actions">
-        <button id="exportCsvBtn" class="btn small">Export CSV</button>
-        <button id="exportJsonBtn" class="btn small">Export JSON</button>
-        <input id="importJsonFile" type="file" accept="application/json" style="display:none" />
-        <button id="importJsonBtn" class="btn small">Import JSON</button>
-      </div>
-    </header>
+    <div class="container">
+        <header>
+            <h1>💰 Expense Tracker</h1>
+            <p>Manage your income and expenses</p>
+        </header>
 
-    <main class="grid">
-      <section class="panel summary-panel">
-        <div class="balance">
-          <small>Balance</small>
-          <h2 id="balance">$0.00</h2>
-        </div>
-        <div class="quick-stats">
-          <div class="stat">
-            <small>Income</small>
-            <p id="income" class="positive">$0.00</p>
-          </div>
-          <div class="stat">
-            <small>Expense</small>
-            <p id="expense" class="negative">$0.00</p>
-          </div>
-        </div>
-
-        <div class="filters">
-          <label>
-            From
-            <input type="date" id="filterFrom" />
-          </label>
-          <label>
-            To
-            <input type="date" id="filterTo" />
-          </label>
-          <label>
-            Category
-            <select id="filterCategory">
-              <option value="">All</option>
-            </select>
-          </label>
-          <button id="clearFilters" class="btn">Clear</button>
-        </div>
-
-        <div class="add-transaction glass">
-          <h3>Add Transaction</h3>
-          <form id="transactionForm">
-            <div class="row">
-              <input type="text" id="desc" placeholder="Description" required />
-              <input type="number" id="amt" placeholder="Amount (use - for expense)" step="0.01" required />
+        <div class="summary-cards">
+            <div class="card income-card">
+                <h3>Total Income</h3>
+                <p class="amount" id="totalIncome">$0.00</p>
             </div>
-            <div class="row">
-              <input type="date" id="date" required />
-              <select id="category" required>
-                <!-- populated by script -->
-              </select>
+            <div class="card expense-card">
+                <h3>Total Expenses</h3>
+                <p class="amount" id="totalExpenses">$0.00</p>
             </div>
-            <textarea id="note" rows="2" placeholder="Note (optional)"></textarea>
-            <div class="row actions">
-              <button type="submit" class="btn primary">Add</button>
-              <button type="button" id="resetForm" class="btn">Reset</button>
+            <div class="card balance-card">
+                <h3>Balance</h3>
+                <p class="amount" id="balance">$0.00</p>
             </div>
-          </form>
         </div>
-      </section>
 
-      <section class="panel charts-panel">
-        <div class="chart-card">
-          <canvas id="doughnutChart"></canvas>
+        <div class="chart-container">
+            <h2>Expense Breakdown</h2>
+            <canvas id="expenseChart"></canvas>
         </div>
-        <div class="chart-card">
-          <canvas id="barChart"></canvas>
-        </div>
-      </section>
 
-      <section class="panel history-panel">
-        <div class="panel-header">
-          <h3>Transactions</h3>
-          <div><small id="txCount">0 items</small></div>
+        <div class="form-container">
+            <h2>Add Transaction</h2>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" placeholder="Enter description" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="">Select category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" required>
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                
+                <button type="submit" class="btn-submit">Add Transaction</button>
+            </form>
         </div>
-        <ul id="transactionsList" class="transactions-list"></ul>
-      </section>
-    </main>
 
-    <!-- Edit Modal -->
-    <div id="editModal" class="modal" aria-hidden="true">
-      <div class="modal-content">
-        <h3>Edit Transaction</h3>
-        <form id="editForm">
-          <input type="hidden" id="editId" />
-          <input type="text" id="editDesc" placeholder="Description" required />
-          <input type="number" id="editAmt" placeholder="Amount" step="0.01" required />
-          <input type="date" id="editDate" required />
-          <select id="editCategory" required></select>
-          <textarea id="editNote" rows="2" placeholder="Note (optional)"></textarea>
-          <div class="row actions">
-            <button type="submit" class="btn primary">Save</button>
-            <button type="button" id="closeEdit" class="btn">Cancel</button>
-          </div>
-        </form>
-      </div>
+        <div class="transactions-container">
+            <div class="transactions-header">
+                <h2>Transaction History</h2>
+                <button id="clearAll" class="btn-clear">Clear All</button>
+            </div>
+            <div id="transactionsList" class="transactions-list">
+                <p class="no-transactions">No transactions yet. Add your first transaction above!</p>
+            </div>
+        </div>
     </div>
 
-    <footer class="footer">
-      <small>Front-end only • LocalStorage • No backend</small>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
