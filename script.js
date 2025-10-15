@@ -1,3 +1,4 @@
+// DOM Elements
 const balance = document.getElementById('balance');
 const income = document.getElementById('income');
 const expense = document.getElementById('expense');
@@ -7,97 +8,52 @@ const text = document.getElementById('text');
 const amount = document.getElementById('amount');
 const chartCanvas = document.getElementById('chart');
 
+// Retrieve transactions from localStorage or initialize empty array
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
+let chart; // Chart.js instance
+
+// Event Listener
 form.addEventListener('submit', addTransaction);
 
+// =======================
+// Add New Transaction
+// =======================
 function addTransaction(e) {
   e.preventDefault();
 
-  const transaction = {
-    id: Date.now(),
-    text: text.value.trim(),
-    amount: +amount.value
-  };
+  const textValue = text.value.trim();
+  const amountValue = parseFloat(amount.value);
 
-  if (transaction.text === '' || isNaN(transaction.amount)) {
-    alert('Please enter valid transaction details.');
+  if (textValue === '' || isNaN(amountValue) || amountValue === 0) {
+    alert('⚠️ Please enter a valid description and non-zero amount!');
     return;
   }
 
+  const transaction = {
+    id: Date.now(),
+    text: textValue,
+    amount: amountValue
+  };
+
   transactions.push(transaction);
-  addTransactionDOM(transaction);
-  updateValues();
-  updateChart();
+
+  updateUI();
   updateLocalStorage();
 
+  // Clear input fields
   text.value = '';
   amount.value = '';
 }
 
-function addTransactionDOM(transaction) {
-  const sign = transaction.amount < 0 ? '-' : '+';
-  const item = document.createElement('li');
-  item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
-  item.innerHTML = `
-    ${transaction.text} 
-    <span>${sign}$${Math.abs(transaction.amount)}</span>
-    <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>
-  `;
-  list.appendChild(item);
-}
-
-function updateValues() {
-  const amounts = transactions.map(t => t.amount);
-  const total = amounts.reduce((acc, item) => acc + item, 0).toFixed(2);
-  const incomeTotal = amounts.filter(item => item > 0).reduce((acc, item) => acc + item, 0).toFixed(2);
-  const expenseTotal = (amounts.filter(item => item < 0).reduce((acc, item) => acc + item, 0) * -1).toFixed(2);
-
-  balance.innerText = `$${total}`;
-  income.innerText = `$${incomeTotal}`;
-  expense.innerText = `$${expenseTotal}`;
-}
-
+// =======================
+// Remove Transaction
+// =======================
 function removeTransaction(id) {
   transactions = transactions.filter(t => t.id !== id);
+  updateUI();
   updateLocalStorage();
-  init();
 }
 
-function updateLocalStorage() {
-  localStorage.setItem('transactions', JSON.stringify(transactions));
-}
-
-function init() {
-  list.innerHTML = '';
-  transactions.forEach(addTransactionDOM);
-  updateValues();
-  updateChart();
-}
-
-let chart;
-function updateChart() {
-  const incomeTotal = transactions.filter(t => t.amount > 0).reduce((a, b) => a + b.amount, 0);
-  const expenseTotal = transactions.filter(t => t.amount < 0).reduce((a, b) => a + b.amount, 0) * -1;
-
-  if (chart) chart.destroy();
-
-  chart = new Chart(chartCanvas, {
-    type: 'doughnut',
-    data: {
-      labels: ['Income', 'Expense'],
-      datasets: [{
-        data: [incomeTotal, expenseTotal],
-        backgroundColor: ['#28a745', '#dc3545'],
-        hoverOffset: 10
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { position: 'bottom' }
-      }
-    }
-  });
-}
-
-init();
+// =======================
+// Update Balance, Income, and Exp
