@@ -1,120 +1,141 @@
-:root{
-  --bg1: #eef2ff;
-  --card: #ffffff;
-  --muted: #6b7280;
-  --accent: #6366f1;
-  --success: #16a34a;
-  --danger: #ef4444;
-  --glass: rgba(255,255,255,0.85);
-  --radius: 12px;
-  --shadow: 0 8px 30px rgba(2,6,23,0.08);
-  --max-width: 1100px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  background: linear-gradient(180deg, #f3f6ff 0%, #eef2ff 100%);
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:28px;
-  color:#0f172a;
+body {
+  background: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
-.app{
-  width:100%;
-  max-width:var(--max-width);
-  background:transparent;
+.container {
+  width: 480px;
+  background: #fff;
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Topbar */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-.topbar h1{font-size:1.25rem;letter-spacing:0.2px}
-.header-actions{display:flex;gap:8px;align-items:center}
-.btn{border:1px solid rgba(15,23,42,0.06);padding:8px 10px;border-radius:8px;background:var(--card);cursor:pointer;font-weight:600}
-.btn.small{padding:6px 8px;font-size:0.85rem}
-.btn.primary{background:var(--accent);color:white;border:none}
-.btn:active{transform:translateY(1px)}
-
-/* Grid */
-.grid{
-  display:grid;
-  grid-template-columns: 360px 1fr 420px;
-  gap:18px;
-  align-items:start;
+h1 {
+  text-align: center;
+  color: #2c3e50;
 }
 
-/* Panels */
-.panel{
-  background:var(--glass);
-  border-radius:var(--radius);
-  padding:16px;
-  box-shadow:var(--shadow);
+.balance-section {
+  text-align: center;
 }
 
-/* Summary panel */
-.summary-panel .balance{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.balance small{color:var(--muted);font-weight:600}
-.balance h2{font-size:2rem}
-.quick-stats{display:flex;gap:12px}
-.stat{flex:1;text-align:center}
-.positive{color:var(--success);font-weight:700}
-.negative{color:var(--danger);font-weight:700}
-
-/* Filters */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.filters label{display:flex;flex-direction:column;font-size:0.85rem;color:var(--muted)}
-.filters input,.filters select{padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);background:white}
-
-/* Add transaction */
-.add-transaction h3{margin-bottom:8px}
-.add-transaction .row{display:flex;gap:8px;margin-bottom:8px}
-.add-transaction input,.add-transaction select,.add-transaction textarea{
-  width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);
-  background:white;font-size:0.95rem;
+.summary {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
 }
-.add-transaction textarea{resize:vertical}
 
-/* Charts */
-.charts-panel{display:flex;flex-direction:column;gap:12px}
-.chart-card{background:linear-gradient(180deg, #fff 0%, #fbfbff 100%);padding:12px;border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
-.chart-card canvas{width:100%!important;height:230px!important}
-
-/* History */
-.history-panel{padding:10px}
-.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.transactions-list{list-style:none;max-height:60vh;overflow:auto;padding-right:6px}
-.tx{
-  display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;margin-bottom:8px;background:linear-gradient(180deg,#fff,#fbfbff);border-left:6px solid #ddd;
-  box-shadow:0 6px 18px rgba(2,6,23,0.03);
+.income p {
+  color: green;
+  font-weight: bold;
 }
-.tx .meta{display:flex;flex-direction:column;gap:4px}
-.tx .meta small{color:var(--muted)}
-.tx .amount{font-weight:700;min-width:110px;text-align:right}
-.tx.income{border-left-color:var(--success)}
-.tx.expense{border-left-color:var(--danger)}
-.tx .actions{display:flex;gap:8px;align-items:center}
-.icon-btn{background:transparent;border:1px solid rgba(15,23,42,0.05);padding:6px;border-radius:8px;cursor:pointer}
 
-/* Modal */
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:40}
-.modal[aria-hidden="false"]{display:flex}
-.modal-content{background:white;padding:18px;border-radius:12px;min-width:320px;max-width:520px;box-shadow:var(--shadow)}
-.modal-content input,.modal-content select,.modal-content textarea{width:100%;padding:8px;margin-bottom:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06)}
+.expense p {
+  color: red;
+  font-weight: bold;
+}
 
-/* Footer */
-.footer{text-align:center;margin-top:12px;color:var(--muted)}
+.transaction-form,
+.filters,
+.history,
+.chart-container {
+  margin-top: 25px;
+}
 
-/* Responsive */
-@media (max-width:1100px){
-  .grid{grid-template-columns: 1fr;gap:12px}
-  .charts-panel{order:3}
-  .history-panel{order:2}
+.transaction-form input,
+.transaction-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.transaction-form button {
+  width: 100%;
+  padding: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.transaction-form button:hover {
+  background: #2980b9;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.filters input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.filters button {
+  padding: 8px 12px;
+  background: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  background: #d35400;
+}
+
+#list {
+  list-style: none;
+  padding: 0;
+}
+
+#list li {
+  display: flex;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 10px;
+  margin: 6px 0;
+  border-left: 6px solid;
+  border-radius: 5px;
+}
+
+#list li.plus {
+  border-color: green;
+}
+
+#list li.minus {
+  border-color: red;
+}
+
+#list li small {
+  color: #555;
+}
+
+#list li button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+}
+
+.chart-container {
+  margin-top: 30px;
 }
