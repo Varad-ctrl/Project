@@ -5,10 +5,10 @@ metadata:
   labels:
     app: my-web-app
 spec:
-  replicas: 3                # Number of Pods to start initially
+  replicas: 3
   selector:
     matchLabels:
-      app: my-web-app        # Must match template labels
+      app: my-web-app
   template:
     metadata:
       labels:
@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: my-web-container
-          image: varad1021/web-app-project:latest     # You can replace this with your own web app image
+          image: varad1021/web-app-project:latest   # ✅ Custom image from Docker Hub
+          imagePullPolicy: Always                   # ✅ Force Kubernetes to pull fresh image
           ports:
             - containerPort: 80
           resources:
